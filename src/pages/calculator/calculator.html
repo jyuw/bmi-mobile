@@ -5,39 +5,75 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>calculator</ion-title>
+    <ion-title>Calculator</ion-title>
   </ion-navbar>
 
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="units" color="primary">
+      <ion-segment-button value="metric">Metric</ion-segment-button>
+      <ion-segment-button value="imperial">Imperial</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
+<ion-content>
 
-<ion-content padding>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Weight (kg)</ion-label>
-      <ion-input type="number" [(ngModel)]="weight"></ion-input>
-    </ion-item>
+  <div [ngSwitch]="units">
+    <ion-list *ngSwitchCase="'metric'">
+      <ion-item>
+        <ion-label floating>Weight (kg)</ion-label>
+        <ion-input type="number" [(ngModel)]="weightMetric"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label floating>Height (cm)</ion-label>
-      <ion-input type="number" [(ngModel)]="height"></ion-input>
-    </ion-item>
-  </ion-list>
+      <ion-item>
+        <ion-label floating>Height (cm)</ion-label>
+        <ion-input type="number" [(ngModel)]="heightMetric"></ion-input>
+      </ion-item>
 
-  <div padding>
-    <button block ion-button (click)="calculateBMI()">Calculate</button>
+      <div padding>
+        <button block ion-button (click)="calculateMetricBMI()">Calculate</button>
+      </div>
+
+      <ion-card *ngIf="bmiValue">
+        <ion-card-header>
+          BMI Calculation
+        </ion-card-header>
+        <ion-card-content>
+          <p>Person: Weight {{this.weightMetric}} kg, Height {{this.heightMetric}} cm</p>
+          <p>BMI: {{bmiValue}}</p>
+          <p><strong>You are {{bmiMessage}}</strong></p>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
   </div>
 
-  <ion-card *ngIf="bmiValue">
-    <ion-card-header>
-      BMI Calculation
-    </ion-card-header>
-    <ion-card-content>
-      <p>Person: Weight {{this.weight}} kg, Height {{this.height}} cm</p>
-      <p>BMI: {{bmiValue}}</p>
-      <p><strong>You are {{bmiMessage}}</strong></p>
-    </ion-card-content>
-  </ion-card>
+  <div [ngSwitch]="units">
+    <ion-list *ngSwitchCase="'imperial'">
+      <ion-item>
+        <ion-label floating>Weight (lbs)</ion-label>
+        <ion-input type="number" [(ngModel)]="weightImperial"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Height (in)</ion-label>
+        <ion-input type="number" [(ngModel)]="heightImperial"></ion-input>
+      </ion-item>
+
+      <div padding>
+        <button block ion-button (click)="calculateImperialBMI()">Calculate</button>
+      </div>
+
+      <ion-card *ngIf="bmiValue">
+        <ion-card-header>
+          BMI Calculation
+        </ion-card-header>
+        <ion-card-content>
+          <p>Person: Weight {{this.weightImperial}} lbs, Height {{this.heightImperial}} in</p>
+          <p>BMI: {{bmiValue}}</p>
+          <p><strong>You are {{bmiMessage}}</strong></p>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
 </ion-content>
